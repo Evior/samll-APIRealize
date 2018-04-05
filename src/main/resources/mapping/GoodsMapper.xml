@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.evio.samll2.mapper.GoodsMapper" >
+  <resultMap id="BaseResultMap" type="com.evio.samll2.pojo.Goods" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="price" property="price" jdbcType="DOUBLE" />
+    <result column="goodsType" property="goodstype" jdbcType="INTEGER" />
+    <result column="img" property="img" jdbcType="VARCHAR" />
+    <result column="discount" property="discount" jdbcType="INTEGER" />
+    <result column="isHot" property="ishot" jdbcType="INTEGER" />
+    <result column="saled" property="saled" jdbcType="INTEGER" />
+    <result column="goodsDesc" property="goodsdesc" jdbcType="VARCHAR" />
+    <result column="rate" property="rate" jdbcType="INTEGER" />
+    <result column="isNew" property="isnew" jdbcType="BIT" />
+    <result column="creaetDate" property="creaetdate" jdbcType="TIMESTAMP" />
+    <result column="updateDate" property="updatedate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, name, price, goodsType, img, discount, isHot, saled, goodsDesc, rate, isNew, 
+    creaetDate, updateDate
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.evio.samll2.pojo.GoodsExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from small_goods
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from small_goods
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from small_goods
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.evio.samll2.pojo.GoodsExample" >
+    delete from small_goods
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.evio.samll2.pojo.Goods" >
+    insert into small_goods (id, name, price, 
+      goodsType, img, discount, 
+      isHot, saled, goodsDesc, 
+      rate, isNew, creaetDate, 
+      updateDate)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{price,jdbcType=DOUBLE}, 
+      #{goodstype,jdbcType=INTEGER}, #{img,jdbcType=VARCHAR}, #{discount,jdbcType=INTEGER}, 
+      #{ishot,jdbcType=INTEGER}, #{saled,jdbcType=INTEGER}, #{goodsdesc,jdbcType=VARCHAR}, 
+      #{rate,jdbcType=INTEGER}, #{isnew,jdbcType=BIT}, #{creaetdate,jdbcType=TIMESTAMP}, 
+      #{updatedate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.evio.samll2.pojo.Goods" >
+    insert into small_goods
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="goodstype != null" >
+        goodsType,
+      </if>
+      <if test="img != null" >
+        img,
+      </if>
+      <if test="discount != null" >
+        discount,
+      </if>
+      <if test="ishot != null" >
+        isHot,
+      </if>
+      <if test="saled != null" >
+        saled,
+      </if>
+      <if test="goodsdesc != null" >
+        goodsDesc,
+      </if>
+      <if test="rate != null" >
+        rate,
+      </if>
+      <if test="isnew != null" >
+        isNew,
+      </if>
+      <if test="creaetdate != null" >
+        creaetDate,
+      </if>
+      <if test="updatedate != null" >
+        updateDate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=DOUBLE},
+      </if>
+      <if test="goodstype != null" >
+        #{goodstype,jdbcType=INTEGER},
+      </if>
+      <if test="img != null" >
+        #{img,jdbcType=VARCHAR},
+      </if>
+      <if test="discount != null" >
+        #{discount,jdbcType=INTEGER},
+      </if>
+      <if test="ishot != null" >
+        #{ishot,jdbcType=INTEGER},
+      </if>
+      <if test="saled != null" >
+        #{saled,jdbcType=INTEGER},
+      </if>
+      <if test="goodsdesc != null" >
+        #{goodsdesc,jdbcType=VARCHAR},
+      </if>
+      <if test="rate != null" >
+        #{rate,jdbcType=INTEGER},
+      </if>
+      <if test="isnew != null" >
+        #{isnew,jdbcType=BIT},
+      </if>
+      <if test="creaetdate != null" >
+        #{creaetdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedate != null" >
+        #{updatedate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.evio.samll2.pojo.GoodsExample" resultType="java.lang.Integer" >
+    select count(*) from small_goods
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update small_goods
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.price != null" >
+        price = #{record.price,jdbcType=DOUBLE},
+      </if>
+      <if test="record.goodstype != null" >
+        goodsType = #{record.goodstype,jdbcType=INTEGER},
+      </if>
+      <if test="record.img != null" >
+        img = #{record.img,jdbcType=VARCHAR},
+      </if>
+      <if test="record.discount != null" >
+        discount = #{record.discount,jdbcType=INTEGER},
+      </if>
+      <if test="record.ishot != null" >
+        isHot = #{record.ishot,jdbcType=INTEGER},
+      </if>
+      <if test="record.saled != null" >
+        saled = #{record.saled,jdbcType=INTEGER},
+      </if>
+      <if test="record.goodsdesc != null" >
+        goodsDesc = #{record.goodsdesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rate != null" >
+        rate = #{record.rate,jdbcType=INTEGER},
+      </if>
+      <if test="record.isnew != null" >
+        isNew = #{record.isnew,jdbcType=BIT},
+      </if>
+      <if test="record.creaetdate != null" >
+        creaetDate = #{record.creaetdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updatedate != null" >
+        updateDate = #{record.updatedate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update small_goods
+    set id = #{record.id,jdbcType=INTEGER},
+      name = #{record.name,jdbcType=VARCHAR},
+      price = #{record.price,jdbcType=DOUBLE},
+      goodsType = #{record.goodstype,jdbcType=INTEGER},
+      img = #{record.img,jdbcType=VARCHAR},
+      discount = #{record.discount,jdbcType=INTEGER},
+      isHot = #{record.ishot,jdbcType=INTEGER},
+      saled = #{record.saled,jdbcType=INTEGER},
+      goodsDesc = #{record.goodsdesc,jdbcType=VARCHAR},
+      rate = #{record.rate,jdbcType=INTEGER},
+      isNew = #{record.isnew,jdbcType=BIT},
+      creaetDate = #{record.creaetdate,jdbcType=TIMESTAMP},
+      updateDate = #{record.updatedate,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.evio.samll2.pojo.Goods" >
+    update small_goods
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=DOUBLE},
+      </if>
+      <if test="goodstype != null" >
+        goodsType = #{goodstype,jdbcType=INTEGER},
+      </if>
+      <if test="img != null" >
+        img = #{img,jdbcType=VARCHAR},
+      </if>
+      <if test="discount != null" >
+        discount = #{discount,jdbcType=INTEGER},
+      </if>
+      <if test="ishot != null" >
+        isHot = #{ishot,jdbcType=INTEGER},
+      </if>
+      <if test="saled != null" >
+        saled = #{saled,jdbcType=INTEGER},
+      </if>
+      <if test="goodsdesc != null" >
+        goodsDesc = #{goodsdesc,jdbcType=VARCHAR},
+      </if>
+      <if test="rate != null" >
+        rate = #{rate,jdbcType=INTEGER},
+      </if>
+      <if test="isnew != null" >
+        isNew = #{isnew,jdbcType=BIT},
+      </if>
+      <if test="creaetdate != null" >
+        creaetDate = #{creaetdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedate != null" >
+        updateDate = #{updatedate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.evio.samll2.pojo.Goods" >
+    update small_goods
+    set name = #{name,jdbcType=VARCHAR},
+      price = #{price,jdbcType=DOUBLE},
+      goodsType = #{goodstype,jdbcType=INTEGER},
+      img = #{img,jdbcType=VARCHAR},
+      discount = #{discount,jdbcType=INTEGER},
+      isHot = #{ishot,jdbcType=INTEGER},
+      saled = #{saled,jdbcType=INTEGER},
+      goodsDesc = #{goodsdesc,jdbcType=VARCHAR},
+      rate = #{rate,jdbcType=INTEGER},
+      isNew = #{isnew,jdbcType=BIT},
+      creaetDate = #{creaetdate,jdbcType=TIMESTAMP},
+      updateDate = #{updatedate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
